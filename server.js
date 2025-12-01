@@ -1,14 +1,14 @@
 // server.js
-const express = require('express');
-const cors = require('cors');
-const fetch = require('node-fetch'); // Ensure version 2.x or use dynamic import for v3
+import express from 'express';
+import cors from 'cors';
+import fetch from 'node-fetch'; // This now works perfectly with v3
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 1. Enable CORS so Webflow can talk to this server
+// 1. Enable CORS
 app.use(cors({
-    origin: '*', // For production, replace '*' with our Webflow domain (e.g., 'https://mysite.webflow.io')
+    origin: '*',  //TODO: change to just the necessary webflow origin(s)
     methods: ['POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type']
 }));
@@ -19,7 +19,7 @@ app.use(express.json());
 // 3. The Proxy Route
 app.post('/api/chat', async (req, res) => {
     
-    // SECURE CONFIGURATION (Loaded from Render Environment Variables)
+    // Config
     const API_KEY = process.env.LANGGRAPH_API_KEY;
     const BASE_URL = process.env.LANGGRAPH_URL;
     const ASSISTANT_ID = process.env.ASSISTANT_ID;
@@ -81,7 +81,6 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
-// Start the server
 app.listen(PORT, () => {
     console.log(`Proxy server running on port ${PORT}`);
 });
