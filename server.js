@@ -8,7 +8,10 @@ const PORT = process.env.PORT || 3000;
 
 // 1. Enable CORS
 app.use(cors({
-    origin: '*',  //TODO: change to just the necessary webflow origin(s)
+    origin: [
+		'https://leona-1e033a.webflow.io/new-home',
+		'https://www.leona.health'
+	], 
     methods: ['POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type']
 }));
